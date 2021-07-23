@@ -39,14 +39,13 @@
 #include "sensirion_common.h"
 #include "sensirion_i2c_hal.h"
 #include "sgp41_i2c.h"
+#include <inttypes.h>
 
 /*
  * TO USE CONSOLE OUTPUT (PRINTF) YOU MAY NEED TO ADAPT THE INCLUDE ABOVE OR
  * DEFINE IT ACCORDING TO YOUR PLATFORM:
  * #define printf(...)
  */
-
-// TODO: DRIVER_GENERATOR Add missing commands and make prints more pretty
 
 int main(void) {
     int16_t error = 0;
@@ -57,34 +56,26 @@ int main(void) {
     uint8_t serial_number_size = 3;
 
     error = sgp41_get_serial_number(serial_number, serial_number_size);
-
     if (error) {
         printf("Error executing sgp41_get_serial_number(): %i\n", error);
     } else {
-        printf("Serial number: ");
-        for (size_t i = 0; i < serial_number_size; i++) {
-            printf("%u, ", serial_number[i]);
-        }
-        printf("\n");
-<<<<<<< Updated upstream
+        printf("Serial number: %" PRIu64 "\n",
+               (((uint64_t)serial_number[0]) << 32) |
+                   (((uint64_t)serial_number[1]) << 16) |
+                   ((uint64_t)serial_number[2]));
     }
 
     uint16_t test_result;
 
-    error = sgp41_self_test(&test_result);
-
+    error = sgp41_measure_test(&test_result);
     if (error) {
-        printf("Error executing sgp41_self_test(): %i\n", error);
+        printf("Error executing sgp41_measure_test(): %i\n", error);
     } else {
         printf("Test result: %u\n", test_result);
-=======
->>>>>>> Stashed changes
     }
 
     // Start Measurement
 
-<<<<<<< Updated upstream
-=======
     // Parameters for deactivated humidity compensation:
     uint16_t default_rh = 0x8000;
     uint16_t default_t = 0x6666;
@@ -106,13 +97,21 @@ int main(void) {
         }
     }
 
->>>>>>> Stashed changes
     for (;;) {
-        // Read Measurement
-        // TODO: DRIVER_GENERATOR check and update measurement interval
+        uint16_t sraw_voc;
+        uint16_t sraw_nox;
+
         sensirion_i2c_hal_sleep_usec(1000000);
-        // TODO: DRIVER_GENERATOR Add scaling and offset to printed measurement
-        // values
+
+        error = sgp41_measure_raw(default_rh, default_t, &sraw_voc, &sraw_nox);
+        if (error) {
+            printf("Error executing sgp41_measure_raw(): "
+                   "%i\n",
+                   error);
+        } else {
+            printf("SRAW VOC: %u\n", sraw_voc);
+            printf("SRAW NOx: %u\n", sraw_nox);
+        }
     }
 
     return 0;
