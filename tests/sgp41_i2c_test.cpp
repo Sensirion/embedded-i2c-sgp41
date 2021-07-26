@@ -45,17 +45,12 @@
 #include <inttypes.h>
 #include <stdio.h>
 
-// TODO: DRIVER_GENERATOR Remove commands which shouldn't be tested
-// TODO: DRIVER_GENERATOR Adjust setup and teardown
-// TODO: DRIVER_GENERATOR Adjust all tests such that pre- and post conditions
-// are meet
-
 TEST_GROUP (SGP41_Tests) {
     void setup() {
         sensirion_i2c_hal_init();
 
-        // Select MUX 1 channel 1 (TODO: DRIVER_GENERATOR choose correct mux
-        // position)
+        // Select MUX 1 channel 1 (No SGP41 attached yet... choose correct mux
+        // position when SGP41 added to testbed)
         int16_t error = sensirion_i2c_mux_set_single_channel(0x71, 1);
         CHECK_EQUAL_ZERO_TEXT(error, "sensirion_i2c_mux_set_single_channel")
     }
