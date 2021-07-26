@@ -151,6 +151,8 @@ int16_t sgp41_get_serial_number(uint16_t* serial_number,
     if (error) {
         return error;
     }
-    sensirion_common_copy_bytes(&buffer[0], serial_number, serial_number_size);
+    serial_number[0] = sensirion_common_bytes_to_uint16_t(&buffer[0]);
+    serial_number[1] = sensirion_common_bytes_to_uint16_t(&buffer[2]);
+    serial_number[2] = sensirion_common_bytes_to_uint16_t(&buffer[4]);
     return NO_ERROR;
 }
