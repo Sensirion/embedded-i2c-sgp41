@@ -1,3 +1,10 @@
+# Sensirion Embedded I2C SGP41 Driver
+
+This is a generic embedded driver for the Sensirion SGP41 sensor. It enables developers to communicate with the
+SGP41 sensor on different hardware platforms by only adapting the I2C communication related source files.
+
+<center><img src="images/SGP41.png" width="500px"></center>
+
 # Getting started
 
 ## Implement the I2C Interface
@@ -54,7 +61,7 @@ Here we demonstrate the procedure for Linux based platforms:
 1. Open up a terminal.
 2. Navigate to the directory where this README is located.
 3. Run `make` (this compiles the example code into one executable binary).
-4. Run the compiled executable with `./[SENSORNAME]_i2c_example_usage`
+4. Run the compiled executable with `./sgp41_i2c_example_usage`
 5. Now you should see the first measurement values appear in your terminal. As
    a next step you can adjust the example usage file or write your own main
    function to use the sensor.
