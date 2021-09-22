@@ -1,7 +1,7 @@
 /*
- * I2C-Generator: 0.2.0
+ * I2C-Generator: 0.3.0
  * Yaml Version: 0.1.0
- * Template Version: 0.7.0-24-g00f1ef2
+ * Template Version: 0.7.0-62-g3d691f9
  */
 /*
  * Copyright (c) 2021, Sensirion AG
@@ -39,7 +39,7 @@
 #include "sensirion_common.h"
 #include "sensirion_i2c_hal.h"
 #include "sgp41_i2c.h"
-#include <inttypes.h>
+// #include <inttypes.h>
 
 /*
  * TO USE CONSOLE OUTPUT (PRINTF) YOU MAY NEED TO ADAPT THE INCLUDE ABOVE OR
@@ -59,17 +59,19 @@ int main(void) {
     if (error) {
         printf("Error executing sgp41_get_serial_number(): %i\n", error);
     } else {
-        printf("Serial number: %" PRIu64 "\n",
-               (((uint64_t)serial_number[0]) << 32) |
-                   (((uint64_t)serial_number[1]) << 16) |
-                   ((uint64_t)serial_number[2]));
+        // printf("Serial number: %" PRIu64 "\n",
+        //         (((uint64_t)serial_number[0]) << 32) |
+        //         (((uint64_t)serial_number[1]) << 16) |
+        //         ((uint64_t)serial_number[2]));
+        printf("serial: 0x%04x%04x%04x\n", serial_number[0], serial_number[1],
+               serial_number[2]);
     }
 
     uint16_t test_result;
 
-    error = sgp41_measure_test(&test_result);
+    error = sgp41_execute_self_test(&test_result);
     if (error) {
-        printf("Error executing sgp41_measure_test(): %i\n", error);
+        printf("Error executing sgp41_execute_self_test(): %i\n", error);
     } else {
         printf("Test result: %u\n", test_result);
     }
@@ -86,9 +88,9 @@ int main(void) {
 
         sensirion_i2c_hal_sleep_usec(1000000);
 
-        error = sgp41_conditioning(default_rh, default_t, &sraw_voc);
+        error = sgp41_execute_conditioning(default_rh, default_t, &sraw_voc);
         if (error) {
-            printf("Error executing sgp41_conditioning(): "
+            printf("Error executing sgp41_execute_conditioning(): "
                    "%i\n",
                    error);
         } else {
@@ -97,15 +99,16 @@ int main(void) {
         }
     }
 
-    for (;;) {
+    for (int i = 0; i < 60; i++) {
         uint16_t sraw_voc;
         uint16_t sraw_nox;
 
         sensirion_i2c_hal_sleep_usec(1000000);
 
-        error = sgp41_measure_raw(default_rh, default_t, &sraw_voc, &sraw_nox);
+        error = sgp41_measure_raw_signals(default_rh, default_t, &sraw_voc,
+                                          &sraw_nox);
         if (error) {
-            printf("Error executing sgp41_measure_raw(): "
+            printf("Error executing sgp41_measure_raw_signals(): "
                    "%i\n",
                    error);
         } else {
