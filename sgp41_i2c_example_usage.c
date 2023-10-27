@@ -53,9 +53,8 @@ int main(void) {
     sensirion_i2c_hal_init();
 
     uint16_t serial_number[3];
-    uint8_t serial_number_size = 3;
 
-    error = sgp41_get_serial_number(serial_number, serial_number_size);
+    error = sgp41_get_serial_number(serial_number);
     if (error) {
         printf("Error executing sgp41_get_serial_number(): %i\n", error);
     } else {

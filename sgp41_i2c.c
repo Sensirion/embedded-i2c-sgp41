@@ -134,8 +134,7 @@ int16_t sgp41_turn_heater_off(void) {
     return NO_ERROR;
 }
 
-int16_t sgp41_get_serial_number(uint16_t* serial_number,
-                                uint8_t serial_number_size) {
+int16_t sgp41_get_serial_number(uint16_t* serial_number) {
     int16_t error;
     uint8_t buffer[9];
     uint16_t offset = 0;
