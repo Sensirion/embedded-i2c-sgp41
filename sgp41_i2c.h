@@ -122,8 +122,7 @@ int16_t sgp41_turn_heater_off(void);
  *
  * @return 0 on success, an error code otherwise
  */
-int16_t sgp41_get_serial_number(uint16_t* serial_number,
-                                uint8_t serial_number_size);
+int16_t sgp41_get_serial_number(uint16_t* serial_number);
 
 #ifdef __cplusplus
 }

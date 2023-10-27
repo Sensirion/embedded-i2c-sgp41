@@ -100,9 +100,8 @@ TEST (SGP41_Tests, SGP41_Test_turn_heater_off) {
 
 TEST (SGP41_Tests, SGP41_Test_get_serial_number) {
     int16_t error;
-    uint16_t serial_number[42];
-    uint8_t serial_number_size = 42;
-    error = sgp41_get_serial_number(&serial_number[0], serial_number_size);
+    uint16_t serial_number[3];
+    error = sgp41_get_serial_number(&serial_number[0]);
     CHECK_EQUAL_ZERO_TEXT(error, "sgp41_get_serial_number");
     printf("Serial number: ");
     for (size_t i = 0; i < serial_number_size; i++) {
