@@ -82,6 +82,8 @@ int main(void) {
     uint16_t default_t = 0x6666;
 
     // sgp41 conditioning during 10 seconds before measuring
+    // WARNING: To avoid damage to the sensing material the conditioning must
+    // not exceed 10s!
     for (int i = 0; i < 10; i++) {
         uint16_t sraw_voc;
 

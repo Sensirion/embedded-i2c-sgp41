@@ -99,3 +99,11 @@ In these files you can find some helper functions used by Sensirion's embedded
 drivers. It mostly contains byte order conversions for different variable
 types. These functions are also used by the UART embedded drivers therefore
 they are kept in their own file.
+
+## Conditioning
+
+After each restart of the sensor or when the hotplates have been switched off, the conditioning command must
+be called from idle mode. The conditioning heats the hotplate of the NOx pixel to a different temperature compared
+to the measurement mode enabling a faster switch-on thereafter.
+
+It is recommended to execute the conditioning for 10s, but **10s must not be exceeded** to avoid damage to the sensing material.
