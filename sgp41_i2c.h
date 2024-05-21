@@ -52,6 +52,9 @@ extern "C" {
  * different temperature for conditioning. This command returns only the
  * measured raw signal of the VOC pixel SRAW_VOC as 2 bytes (+ 1 CRC byte).
  *
+ * WARNING: To avoid damage to the sensing material the conditioning must not
+ * exceed 10s!
+ *
  * @param default_rh Default conditions for relative humidty.
  *
  * @param default_t Default conditions for temperature.
